@@ -19,7 +19,7 @@ export const Home = () => {
 
         <S.ButtonToHome onPress={() => navigation.navigate('Feed')}>
           <S.TextButton>Prosseguir</S.TextButton>
-          <S.ArrowIcon name="arrow-forward" size={22} color="#FFFFFF" />
+          <S.ArrowIcon name="arrow-forward" size={18} color="#FFFFFF" />
         </S.ButtonToHome>
       </S.Background>
     </S.Container>

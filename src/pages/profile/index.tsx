@@ -1,5 +1,5 @@
 import React from 'react';
 
-export const Feed = () => {
+export const Profile = () => {
   return <></>;
 };

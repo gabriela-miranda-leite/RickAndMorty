@@ -35,7 +35,7 @@ export const ButtonToHome = styled.TouchableOpacity.attrs({activeOpacity: 0.8})`
   background-color: ${theme.colors.primary};
   border-radius: 8px;
 
-  padding: 15px 50px;
+  padding: 0px 50px;
 `;
 
 export const TextButton = styled.Text`
@@ -45,5 +45,5 @@ export const TextButton = styled.Text`
 `;
 
 export const ArrowIcon = styled(Icon)`
-  padding-left: 15px;
+  margin: 0 0 2px 5px;
 `;

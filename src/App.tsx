@@ -4,7 +4,7 @@ import {StatusBar} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 
-import {Home} from './pages';
+import Routes from './routes';
 
 const App = () => {
   return (
@@ -14,7 +14,7 @@ const App = () => {
         backgroundColor="transparent"
         translucent
       />
-      <Home />
+      <Routes />
     </NavigationContainer>
   );
 };

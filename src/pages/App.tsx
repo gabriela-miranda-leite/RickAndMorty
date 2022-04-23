@@ -2,12 +2,12 @@ import React from 'react';
 
 import {NavigationContainer} from '@react-navigation/native';
 
-import {View} from 'react-native';
+import {Home} from '../pages';
 
 const App = () => {
   return (
     <NavigationContainer>
-      <View />
+      <Home />
     </NavigationContainer>
   );
 };

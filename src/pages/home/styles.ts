@@ -39,7 +39,7 @@ export const ButtonToHome = styled.TouchableOpacity.attrs({activeOpacity: 0.8})`
 `;
 
 export const TextButton = styled.Text`
-  font-family: 'Popping-Regular';
+  font-family: ${theme.fonts.regular};
   font-size: 16px;
   color: ${theme.colors.text.light};
 `;

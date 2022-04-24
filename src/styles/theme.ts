@@ -5,6 +5,7 @@ export const theme = {
     text: {
       dark: '#333333',
       light: '#FFFFFF',
+      info: '#555555',
     },
     status: {
       alive: '#4AC82A',

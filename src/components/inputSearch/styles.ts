@@ -12,7 +12,7 @@ export const Container = styled.View`
 
   background-color: ${theme.colors.text.light};
   border-radius: 6px;
-  margin: -30px 15px 20px;
+  margin: -30px 15px 0;
 `;
 
 export const SearchInput = styled(TextInput)``;

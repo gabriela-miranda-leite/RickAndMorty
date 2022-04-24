@@ -23,7 +23,7 @@ export const InputSearch: React.FC<InputSearchProps> = ({
   return (
     <KeyboardAvoidingView behavior="position">
       <S.Container>
-        <S.SearchIcon name="search" size={22} color="#333333" />
+        <S.SearchIcon name="search" size={20} color="#1E2047" />
         <S.SearchInput
           placeholder={placeholder}
           autoCorrect={false}

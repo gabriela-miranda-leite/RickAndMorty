@@ -10,7 +10,7 @@ import {
 import * as S from './styles';
 
 interface InputSearchProps extends TextInputProps {
-  searchFilter?:
+  searchFilter:
     | ((e: NativeSyntheticEvent<TextInputChangeEventData>) => void)
     | undefined;
 }

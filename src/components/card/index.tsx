@@ -8,28 +8,22 @@ import {RootStackParamList} from '../../routes';
 
 import * as S from './styles';
 
+import {CharacterProps} from '../../pages/feed';
+
 type ProfileScreenProps = NativeStackNavigationProp<
   RootStackParamList,
   'Profile'
 >;
 
-interface CharacterProps {
-  character: {
-    id: number;
-    name: string;
-    image: string;
-    species: string;
-    origin: {
-      name: string;
-    };
-  };
-}
+type Props = {
+  character: CharacterProps;
+};
 
-export const Card = ({character}: CharacterProps) => {
+export const Card = ({character}: Props) => {
   const navigation = useNavigation<ProfileScreenProps>();
 
   return (
-    <S.Container onPress={() => navigation.navigate('Profile')}>
+    <S.Container onPress={() => navigation.navigate('Profile', {character})}>
       <S.ImageCharacter
         source={{
           uri: character.image,
@@ -47,7 +41,7 @@ export const Card = ({character}: CharacterProps) => {
           <S.DetailsText numberOfLines={1}>
             {character.origin.name}
           </S.DetailsText>
-          <S.HeartIcon name="cards-heart" size={16} color="#1E2047" />
+          <S.HeartIcon name="cards-heart" size={24} color="#1E2047" />
         </S.FavoriteContainer>
       </S.DetailsCharacter>
     </S.Container>

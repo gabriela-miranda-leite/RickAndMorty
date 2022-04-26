@@ -8,9 +8,9 @@ export const theme = {
       info: '#555555',
     },
     status: {
-      alive: '#4AC82A',
-      dead: '#E91337',
-      unkown: '#FF9000',
+      Alive: '#4AC82A',
+      Dead: '#E91337',
+      Unknown: '#FF9000',
     },
   },
   fonts: {

@@ -15,7 +15,9 @@ export const Container = styled.View`
   margin: -30px 15px 0;
 `;
 
-export const SearchInput = styled(TextInput)``;
+export const SearchInput = styled(TextInput)`
+  color: ${theme.colors.text.dark};
+`;
 
 export const SearchIcon = styled(Icon)`
   padding: 15px;

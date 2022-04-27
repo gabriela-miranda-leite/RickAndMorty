@@ -1,23 +1,13 @@
 import React from 'react';
 
-import {
-  TextInputProps,
-  NativeSyntheticEvent,
-  TextInputChangeEventData,
-  KeyboardAvoidingView,
-} from 'react-native';
+import {TextInputProps, KeyboardAvoidingView} from 'react-native';
 
 import * as S from './styles';
 
-interface InputSearchProps extends TextInputProps {
-  searchFilter:
-    | ((e: NativeSyntheticEvent<TextInputChangeEventData>) => void)
-    | undefined;
-}
+interface InputSearchProps extends TextInputProps {}
 
 export const InputSearch: React.FC<InputSearchProps> = ({
   placeholder,
-  searchFilter,
   ...rest
 }) => {
   return (
@@ -28,7 +18,6 @@ export const InputSearch: React.FC<InputSearchProps> = ({
           placeholder={placeholder}
           autoCorrect={false}
           autoCapitalize="none"
-          onChange={searchFilter}
           {...rest}
         />
       </S.Container>

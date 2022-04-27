@@ -1,4 +1,6 @@
 import styled from 'styled-components/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import {theme} from '../../styles/theme';
 
 interface StatusProps {
@@ -22,6 +24,17 @@ export const Content = styled.View`
   padding: 20px;
   height: 40%;
 `;
+
+export const FavoriteContainer = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const ButtonFavorite = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.8,
+})``;
+
+export const HeartIcon = styled(Icon)``;
 
 export const Name = styled.Text.attrs({numberOfLine: 1})`
   color: ${theme.colors.text.dark};

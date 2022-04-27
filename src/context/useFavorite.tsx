@@ -42,7 +42,6 @@ const FavoriteProvider = ({children}: FavoriteProviderProps) => {
   const getAsyncStorage = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@favorite_list');
-      console.log(jsonValue);
 
       return jsonValue != null
         ? setFavoritesCharacterList(JSON.parse(jsonValue))
@@ -57,7 +56,6 @@ const FavoriteProvider = ({children}: FavoriteProviderProps) => {
       const jsonValue = JSON.stringify(value);
 
       await AsyncStorage.setItem('@favorite_list', jsonValue);
-      console.log('enviou: ', jsonValue);
     } catch (e) {
       console.log('Erro ao salvar');
     }

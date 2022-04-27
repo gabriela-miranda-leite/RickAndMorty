@@ -2,7 +2,7 @@ import React from 'react';
 
 import {Linking, ScrollView} from 'react-native';
 
-import {useNavigation, RouteProp} from '@react-navigation/native';
+import {RouteProp} from '@react-navigation/native';
 
 import {CharacterProps} from '../../pages/feed';
 import {useFavorite} from '../../context/useFavorite';
@@ -20,7 +20,6 @@ interface Props {
 }
 
 export const Profile: React.FC<Props> = ({route}) => {
-  const navigation = useNavigation();
   const {favoritesCharacterList, updatedFavorite} = useFavorite();
   const {character} = route.params;
 

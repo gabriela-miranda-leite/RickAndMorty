@@ -4,6 +4,7 @@ import {StatusBar} from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
 
+import {FavoriteProvider} from './context/useFavorite';
 import Routes from './routes';
 
 const App = () => {
@@ -14,7 +15,9 @@ const App = () => {
         backgroundColor="transparent"
         translucent
       />
-      <Routes />
+      <FavoriteProvider>
+        <Routes />
+      </FavoriteProvider>
     </NavigationContainer>
   );
 };

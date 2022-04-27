@@ -10,7 +10,7 @@ import * as S from './styles';
 export interface CharacterProps {
   id: number;
   name: string;
-  status: string;
+  status: 'Alive' | 'Dead' | 'Unknown';
   species: string;
   gender: string;
   origin: {
@@ -27,56 +27,77 @@ export const Feed = () => {
   const [dataCharacters, setDataCharacters] = useState<CharacterProps[]>([]);
   const [totalCharacters, setTotalCharacters] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>();
+  const [search, setSearch] = useState<string>();
   const [page, setPage] = useState<number>(2);
 
   const nextPage = useCallback(async () => {
-    if (page === totalPages) {
-      setTotalCharacters(0);
-      setPage(1);
-      return;
-    }
-
-    setPageStatus('loading');
-    setPage(page + 1);
-
-    const response = await api.get(`/character/?page=${page}`);
-
-    if (response.status !== 200) {
-      setPageStatus('error');
-
-      setTotalCharacters(0);
-      setPage(1);
-      return;
-    }
-
-    setPageStatus('sucess');
-
-    setDataCharacters(rest => [...rest, ...response.data.results]);
-    setTotalPages(response.data.info.pages);
-    setTotalCharacters(response.data.info.count);
-  }, [page, totalPages]);
-
-  useEffect(() => {
-    const getAllCharacters = async () => {
-      setPageStatus('loading');
-      const response = await api.get('/character/');
-
-      if (response.status !== 200) {
-        setPageStatus('error');
-
-        setTotalCharacters(0);
+    try {
+      if (page === totalPages) {
         setPage(1);
         return;
       }
 
+      setPageStatus('loading');
+      setPage(page + 1);
+
+      const response = search
+        ? await api.get(`/character/?page=${page}&name=${search}`)
+        : await api.get(`/character/?page=${page}`);
+
       setPageStatus('sucess');
 
-      setDataCharacters(response.data.results);
+      setDataCharacters(rest => [...rest, ...response.data.results]);
       setTotalPages(response.data.info.pages);
       setTotalCharacters(response.data.info.count);
-    };
+    } catch (error) {
+      setPageStatus('error');
 
-    getAllCharacters();
+      setTotalCharacters(0);
+      setPage(1);
+    }
+  }, [page, search, totalPages]);
+
+  const filterSearch = useCallback(async () => {
+    try {
+      setDataCharacters([]);
+      setPageStatus('loading');
+
+      const response = await api.get(`/character/?name=${search}`);
+
+      setPageStatus('sucess');
+
+      setDataCharacters([...response.data.results]);
+      setTotalPages(response.data.info.pages);
+      setTotalCharacters(response.data.info.count);
+    } catch (error) {
+      setPageStatus('error');
+      setTotalCharacters(0);
+      setPage(1);
+    }
+  }, [search]);
+
+  useEffect(() => {
+    try {
+      const getAllCharacters = async () => {
+        setPageStatus('loading');
+
+        const response = await api.get('/character/');
+
+        setPageStatus('sucess');
+
+        setDataCharacters(response.data.results);
+
+        setTotalPages(response.data.info.pages);
+        setTotalCharacters(response.data.info.count);
+      };
+
+      getAllCharacters();
+    } catch (error) {
+      setPageStatus('error');
+
+      setTotalCharacters(0);
+      setPage(1);
+    }
   }, []);
 
   return (
@@ -84,11 +105,20 @@ export const Feed = () => {
       <S.HeaderContainer>
         <S.Title>Listagem</S.Title>
         <S.NumberOfCharacters>
-          {totalCharacters} personagens
+          {totalCharacters
+            ? `${totalCharacters} personagens`
+            : 'Nenhum personagem'}
         </S.NumberOfCharacters>
       </S.HeaderContainer>
 
-      <InputSearch placeholder="Busque por um personagem" />
+      <InputSearch
+        placeholder="Busque por um personagem"
+        value={search}
+        onChangeText={text => {
+          setSearch(text);
+        }}
+        onSubmitEditing={filterSearch}
+      />
 
       <FlatList
         style={{padding: 15}}

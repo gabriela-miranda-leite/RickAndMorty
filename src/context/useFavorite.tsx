@@ -1,8 +1,16 @@
-import React, {useContext, createContext, useState, ReactNode} from 'react';
+import React, {
+  useContext,
+  createContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface FavoriteContextProps {
   updatedFavorite: (characterId: number) => void;
   favoritesCharacterList: number[];
+  getAsyncStorage: () => Promise<void | null>;
 }
 
 interface FavoriteProviderProps {
@@ -12,7 +20,9 @@ interface FavoriteProviderProps {
 const FavoriteContext = createContext({} as FavoriteContextProps);
 
 const FavoriteProvider = ({children}: FavoriteProviderProps) => {
-  const [favoritesCharacterList, setFavoritesCharacterList] = useState([0]);
+  const [favoritesCharacterList, setFavoritesCharacterList] = useState(
+    [] as number[],
+  );
 
   const updatedFavorite = (characterId: number) => {
     const isFavorite = favoritesCharacterList.includes(characterId);
@@ -20,6 +30,8 @@ const FavoriteProvider = ({children}: FavoriteProviderProps) => {
     isFavorite
       ? removeCharacterFavoriteList(characterId)
       : setFavoritesCharacterList(prevState => [...prevState, characterId]);
+
+    setAsyncStorage(favoritesCharacterList);
   };
 
   const removeCharacterFavoriteList = (characterId: number) => {
@@ -27,8 +39,41 @@ const FavoriteProvider = ({children}: FavoriteProviderProps) => {
     setFavoritesCharacterList(listFilter);
   };
 
+  const getAsyncStorage = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@favorite_list');
+      console.log(jsonValue);
+
+      return jsonValue != null
+        ? setFavoritesCharacterList(JSON.parse(jsonValue))
+        : null;
+    } catch (e) {
+      console.log('Erro ao adicionar');
+    }
+  };
+
+  const setAsyncStorage = async (value: number[]) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+
+      await AsyncStorage.setItem('@favorite_list', jsonValue);
+      console.log('enviou: ', jsonValue);
+    } catch (e) {
+      console.log('Erro ao salvar');
+    }
+  };
+
+  useEffect(() => {
+    getAsyncStorage();
+  }, []);
+
+  useEffect(() => {
+    setAsyncStorage(favoritesCharacterList);
+  }, [favoritesCharacterList]);
+
   return (
-    <FavoriteContext.Provider value={{favoritesCharacterList, updatedFavorite}}>
+    <FavoriteContext.Provider
+      value={{favoritesCharacterList, updatedFavorite, getAsyncStorage}}>
       {children}
     </FavoriteContext.Provider>
   );

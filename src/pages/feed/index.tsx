@@ -25,7 +25,7 @@ export interface CharacterProps {
 export const Feed = () => {
   const [pageStatus, setPageStatus] = useState('idle');
   const [dataCharacters, setDataCharacters] = useState<CharacterProps[]>([]);
-  const [totalCharacters, setTotalCharacters] = useState<number>(0);
+  const [totalCharacters, setTotalCharacters] = useState<number>();
   const [totalPages, setTotalPages] = useState<number>();
   const [search, setSearch] = useState<string>();
   const [page, setPage] = useState<number>(2);
@@ -130,7 +130,9 @@ export const Feed = () => {
         onEndReached={nextPage}
         ListEmptyComponent={() => (
           <S.EmptyList>
-            <S.EmptyText>Personagem não encontrado</S.EmptyText>
+            {pageStatus !== 'loading' && (
+              <S.EmptyText>Personagem não encontrado</S.EmptyText>
+            )}
           </S.EmptyList>
         )}
         ListFooterComponent={

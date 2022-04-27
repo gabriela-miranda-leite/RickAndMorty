@@ -5,6 +5,7 @@ import {Linking, ScrollView} from 'react-native';
 import {useNavigation, RouteProp} from '@react-navigation/native';
 
 import {CharacterProps} from '../../pages/feed';
+import {useFavorite} from '../../context/useFavorite';
 
 import * as S from './styles';
 interface Props {
@@ -20,6 +21,7 @@ interface Props {
 
 export const Profile: React.FC<Props> = ({route}) => {
   const navigation = useNavigation();
+  const {favoritesCharacterList, updatedFavorite} = useFavorite();
   const {character} = route.params;
 
   const searchGoogle = () => {
@@ -36,7 +38,21 @@ export const Profile: React.FC<Props> = ({route}) => {
 
       <ScrollView>
         <S.Content>
-          <S.Name>{character.name}</S.Name>
+          <S.FavoriteContainer>
+            <S.Name>{character.name}</S.Name>
+
+            <S.ButtonFavorite onPress={() => updatedFavorite(character.id)}>
+              {favoritesCharacterList.includes(character.id) ? (
+                <S.HeartIcon name="cards-heart" size={30} color="#1E2047" />
+              ) : (
+                <S.HeartIcon
+                  name="cards-heart-outline"
+                  size={30}
+                  color="#1E2047"
+                />
+              )}
+            </S.ButtonFavorite>
+          </S.FavoriteContainer>
 
           <S.Details>
             <S.DetailsContent>

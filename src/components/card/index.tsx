@@ -5,6 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 import {RootStackParamList} from '../../routes';
+import {useFavorite} from '../../context/useFavorite';
 
 import * as S from './styles';
 
@@ -21,6 +22,7 @@ type Props = {
 
 export const Card = ({character}: Props) => {
   const navigation = useNavigation<ProfileScreenProps>();
+  const {updatedFavorite, favoritesCharacterList} = useFavorite();
 
   return (
     <S.Container onPress={() => navigation.navigate('Profile', {character})}>
@@ -37,13 +39,16 @@ export const Card = ({character}: Props) => {
 
         <S.DetailsText isLabel>Origin:</S.DetailsText>
 
-        <S.FavoriteContainer>
-          <S.DetailsText numberOfLines={1}>
-            {character.origin.name}
-          </S.DetailsText>
-          <S.HeartIcon name="cards-heart" size={24} color="#1E2047" />
-        </S.FavoriteContainer>
+        <S.DetailsText numberOfLines={1}>{character.origin.name}</S.DetailsText>
       </S.DetailsCharacter>
+
+      <S.ButtonFavorite onPress={() => updatedFavorite(character.id)}>
+        {favoritesCharacterList.includes(character.id) ? (
+          <S.HeartIcon name="cards-heart" size={30} color="#1E2047" />
+        ) : (
+          <S.HeartIcon name="cards-heart-outline" size={30} color="#1E2047" />
+        )}
+      </S.ButtonFavorite>
     </S.Container>
   );
 };

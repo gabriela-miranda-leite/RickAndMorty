@@ -10,7 +10,7 @@ import * as S from './styles';
 export interface CharacterProps {
   id: number;
   name: string;
-  status: string;
+  status: 'Alive' | 'Dead' | 'Unknown';
   species: string;
   gender: string;
   origin: {
@@ -56,9 +56,30 @@ export const Feed = () => {
     setTotalCharacters(response.data.info.count);
   }, [page, totalPages]);
 
+  const filterSearch = useCallback(async search => {
+    setPageStatus('loading');
+
+    const response = await api.get(`/character/?name=${search}`);
+
+    if (response.status !== 200) {
+      setPageStatus('error');
+
+      setTotalCharacters(0);
+      setPage(1);
+      return;
+    }
+
+    setPageStatus('sucess');
+
+    setDataCharacters([...response.data.results]);
+    setTotalPages(response.data.info.pages);
+    setTotalCharacters(response.data.info.count);
+  }, []);
+
   useEffect(() => {
     const getAllCharacters = async () => {
       setPageStatus('loading');
+
       const response = await api.get('/character/');
 
       if (response.status !== 200) {
@@ -72,6 +93,7 @@ export const Feed = () => {
       setPageStatus('sucess');
 
       setDataCharacters(response.data.results);
+
       setTotalPages(response.data.info.pages);
       setTotalCharacters(response.data.info.count);
     };
@@ -88,7 +110,10 @@ export const Feed = () => {
         </S.NumberOfCharacters>
       </S.HeaderContainer>
 
-      <InputSearch placeholder="Busque por um personagem" />
+      <InputSearch
+        placeholder="Busque por um personagem"
+        searchFilter={e => filterSearch(e.nativeEvent.text)}
+      />
 
       <FlatList
         style={{padding: 15}}

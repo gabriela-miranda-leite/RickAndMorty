@@ -52,9 +52,7 @@
     "testEnvironment": "jsdom",
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "./src/components/**",
-      "./src/pages/**",
-      "./src/context/**",
+      "**/*.{ts,tsx}",
       "!**/coverage/**",
       "!**/node_modules/**",
       "!**/babel.config.js",

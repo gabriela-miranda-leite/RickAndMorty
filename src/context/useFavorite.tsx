@@ -24,14 +24,14 @@ const FavoriteProvider = ({children}: FavoriteProviderProps) => {
     [] as number[],
   );
 
-  const updatedFavorite = (characterId: number) => {
+  const updatedFavorite = async (characterId: number) => {
     const isFavorite = favoritesCharacterList.includes(characterId);
 
     isFavorite
       ? removeCharacterFavoriteList(characterId)
       : setFavoritesCharacterList(prevState => [...prevState, characterId]);
 
-    setAsyncStorage(favoritesCharacterList);
+    await setAsyncStorage(favoritesCharacterList);
   };
 
   const removeCharacterFavoriteList = (characterId: number) => {

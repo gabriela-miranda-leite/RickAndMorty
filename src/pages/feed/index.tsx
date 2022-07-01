@@ -44,7 +44,7 @@ export const Feed = () => {
         ? await api.get(`/character/?page=${page}&name=${search}`)
         : await api.get(`/character/?page=${page}`);
 
-      setPageStatus('sucess');
+      setPageStatus('success');
 
       setDataCharacters(rest => [...rest, ...response.data.results]);
       setTotalPages(response.data.info.pages);
@@ -64,7 +64,7 @@ export const Feed = () => {
 
       const response = await api.get(`/character/?name=${search}`);
 
-      setPageStatus('sucess');
+      setPageStatus('success');
 
       setDataCharacters([...response.data.results]);
       setTotalPages(response.data.info.pages);
@@ -83,7 +83,7 @@ export const Feed = () => {
 
         const response = await api.get('/character/');
 
-        setPageStatus('sucess');
+        setPageStatus('success');
 
         setDataCharacters(response.data.results);
 

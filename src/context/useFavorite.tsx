@@ -10,7 +10,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 interface FavoriteContextProps {
   updatedFavorite: (characterId: number) => void;
   favoritesCharacterList: number[];
-  getAsyncStorage: () => Promise<void | null>;
 }
 
 interface FavoriteProviderProps {
@@ -46,9 +45,7 @@ const FavoriteProvider = ({children}: FavoriteProviderProps) => {
       return jsonValue != null
         ? setFavoritesCharacterList(JSON.parse(jsonValue))
         : null;
-    } catch (e) {
-      console.log('Erro ao adicionar');
-    }
+    } catch (e) {}
   };
 
   const setAsyncStorage = async (value: number[]) => {
@@ -56,9 +53,7 @@ const FavoriteProvider = ({children}: FavoriteProviderProps) => {
       const jsonValue = JSON.stringify(value);
 
       await AsyncStorage.setItem('@favorite_list', jsonValue);
-    } catch (e) {
-      console.log('Erro ao salvar');
-    }
+    } catch (e) {}
   };
 
   useEffect(() => {
@@ -70,8 +65,7 @@ const FavoriteProvider = ({children}: FavoriteProviderProps) => {
   }, [favoritesCharacterList]);
 
   return (
-    <FavoriteContext.Provider
-      value={{favoritesCharacterList, updatedFavorite, getAsyncStorage}}>
+    <FavoriteContext.Provider value={{favoritesCharacterList, updatedFavorite}}>
       {children}
     </FavoriteContext.Provider>
   );

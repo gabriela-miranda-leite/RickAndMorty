@@ -14,12 +14,21 @@ export const Home = () => {
 
   return (
     <S.Container>
-      <S.Background source={require('../../assets/home.png')}>
-        <S.Logo source={require('../../assets/logo.png')} />
+      <S.Background
+        testID="background-image"
+        source={require('../../assets/home.png')}>
+        <S.Logo testID="logo-image" source={require('../../assets/logo.png')} />
 
-        <S.ButtonToHome onPress={() => navigation.navigate('Feed')}>
-          <S.TextButton>Prosseguir</S.TextButton>
-          <S.ArrowIcon name="arrow-forward" size={18} color="#FFFFFF" />
+        <S.ButtonToHome
+          testID="continue-button"
+          onPress={() => navigation.navigate('Feed')}>
+          <S.TextButton testID="text-button">Prosseguir</S.TextButton>
+          <S.ArrowIcon
+            testID="arrow-icon"
+            name="arrow-forward"
+            size={18}
+            color="#FFFFFF"
+          />
         </S.ButtonToHome>
       </S.Background>
     </S.Container>
